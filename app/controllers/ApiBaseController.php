@@ -10,15 +10,14 @@ class ApiBaseController extends ControllerBase {
     /**
      * init instance
      */
-    public function __construct()
+    public function initialize()
     {
-
     }
 
     /**
      * 异常处理
      */
-    protected function exHandle(Exception $e)
+    protected function handle(Exception $e)
     {
         $code = $e->getCode();
         if ($code == 0) {
@@ -26,7 +25,7 @@ class ApiBaseController extends ControllerBase {
         }
         $this->respInfo['errcode'] = $code;
         $this->respInfo['errmsg'] = $e->getMessage();
-        Log::error($e);
+        $this->logger->error($e);
         //$this->respInfo['errmsg'] = $e->getTraceAsString();
     }
 
@@ -49,9 +48,14 @@ class ApiBaseController extends ControllerBase {
     /**
      * 设置返回信息
      */
-    protected function setRespMsg($msg)
+    protected function setRespMsg($info = [], $errmsg = 'success')
     {
-        $this->setRespInfo(['errcode' => 0, 'errmsg' => $msg]);
+        $resp = ['errcode' => 0, 'errmsg' => $errmsg];
+        if (! is_array($info)) {
+            $info = $info->toArray();
+        }
+        $resp = array_merge($resp, $info);
+        $this->setRespInfo($resp);
     }
 
     /**
@@ -59,7 +63,7 @@ class ApiBaseController extends ControllerBase {
      */
     protected function output()
     {
-        return Response::json($this->getRespInfo());
+        return $this->response->setJsonContent($this->getRespInfo());
     }
 
 }

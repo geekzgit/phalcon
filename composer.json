@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phalcon/incubator": "v1.3.4",
+        "chrisboulton/php-resque": "1.2.x"
+    }
+}

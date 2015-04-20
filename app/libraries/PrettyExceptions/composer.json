@@ -1,0 +1,19 @@
+{
+    "name": "phalcon/pretty-exceptions",
+    "description": "Beauty-exceptions plugin for Phalcon",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/phalcon/pretty-exceptions/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": "~5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phalcon\\Utils\\": "Library/Phalcon/Utils"
+        }
+    }
+}

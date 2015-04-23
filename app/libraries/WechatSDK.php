@@ -191,7 +191,7 @@ class WechatSDK extends WechatBase{
         $response = curl_exec($ch);
         $response = json_decode($response, true);
         // 写入缓存
-        $expiredAt = ($response['expires_in'] / 60) - 10;// 设置缓存时间（分钟）
+        $expiredAt = $response['expires_in'] - 5 * 60;// 设置缓存时间（分钟）
         $cache->save('wechat_access_token', $response['access_token'], $expiredAt);
         return $response['access_token'];
     }
@@ -260,7 +260,7 @@ class WechatSDK extends WechatBase{
         $resp = json_decode($this->get('cgi-bin/ticket/getticket', ['access_token' => $this->accessToken, 'type' => 'jsapi']), true);
 
         // 写入缓存
-        $expiredAt = ($resp['expires_in'] / 60) - 10;// 设置缓存时间（分钟）
+        $expiredAt = $resp['expires_in'] - 5 * 60;// 设置缓存时间（分钟）
         $cache->save('wechat_js_ticket', $resp['ticket'], $expiredAt);
         return $resp['ticket'];
     }
